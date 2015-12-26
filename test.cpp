@@ -1,57 +1,42 @@
-#include <cstring>
 #include <iostream>
-#include <cstdio>
+
 
 using namespace std;
 
-#define MAX 500
-int t[MAX],k=0;
 
-void shifttable(char p[])
-{
-    int i,j,m;
-    m=strlen(p);
-    for(i=0;i<MAX;i++)
-        t[i]=m;
-    for(j=0;j<m-1;j++)
-        t[p[j]]=m-1-j;
+int max(int a,int b){
+  return a>b?a:b;
 }
 
-int horspool(char src[],char p[])
-{
-    int i,j,m,n;
-    n=strlen(src);
-    m=strlen(p);
-    cout<<"\nLength of text = "<<n;
-    cout<<"\nLength of pattern = "<<m;
-    i=m-1;
-    while(i<n)
-    {
-        k=0;
-        while((k<m)&&(p[m-1-k]==src[i-k]))
-            k++;
-        if(k==m)
-            return(i-m+1);
-        else
-            i+=t[src[i]];
+int knpasack(int weight[],int v[],int n,int w){
+  int a[n+1][w+1];
+
+  for(int i=0;i<=n;i++){
+    for(int j=0;j<=w;j++){
+      if(i==0||j==0){
+        a[i][j]=0;
+      }
+      else if(weight[i-1] <= j){
+        a[i][j]=max(v[i-1]+a[i-1][j-weight[i-1]],a[i-1][j]);
+      }
+      else{
+        a[i][j]=a[i-1][j];
+      }
     }
-    return -1;
+  }
+
+  return a[n][w];
 }
 
-int main()
-{
-    char src[100],p[100];
-    int pos;
-    cout<<"Enter the text in which pattern is to be searched: \n";
-    gets(src);
-    cout<<"Enter the pattern to be searched: \n";
-    gets(p);
-    shifttable(p);
-    pos=horspool(src,p);
-    if(pos>=0)
-        cout<<"\nThe desired pattern was found starting from position "<<pos+1;
-    else
-        cout<<"\nThe pattern was not found in the given text\n";
-    cout<<"\nNumber of comparisons = "<<k<<endl;
-    return 0;
+
+
+
+int main(){
+  int value[]={12,10,20,15};
+  int weight[]={2,1,3,2};
+  int w=5,n=4;
+  int inc[n];
+  cout<<"Knapsack: "<<knpasack(weight,value,n,w)<<endl;
+  return 0;
+  return 0;
 }
