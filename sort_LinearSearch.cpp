@@ -10,12 +10,15 @@ int search(int arr[], int n, int x){
   return -1;
 }
 
-
-
 int main(){
 
   int arr[] = {1,5,4,2,3,9,0};
   int n = sizeof(arr)/sizeof(arr[0]);
-  cout<<search(arr, n, 3);
+  int lol = search(arr, n, 3);
+  if(lol == -1){
+    cout<<"Not found"<<endl;
+  }
+  cout<<lol<<endl;
+
 
 }
